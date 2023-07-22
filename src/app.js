@@ -11,16 +11,12 @@ app.get("/tours", (req, res) => {
   //write a code here to get all the tours from tours.json
   try {
     res.status(200).json({
-      status: 200,
-
       message: "Success",
 
       data: [...tourDetails],
     });
   } catch (err) {
     res.status(404).json({
-      status: 200,
-
       message: "Success",
     });
   }
@@ -36,8 +32,6 @@ app.post("/tours", (req, res) => {
     JSON.stringify(tourDetails),
     (err) => {
       res.json({
-        status: 200,
-
         message: "Tour added successfully",
       });
     }
@@ -60,12 +54,10 @@ app.put("/tours/:id", (req, res) => {
     return user;
   });
   if (!present) {
-    return res.status(404).json({ status: 404, message: "Not Found" });
+    return res.status(404).json({ message: "Tour not found" });
   }
   fs.writeFile(`${__dirname}/data/tours.json`, JSON.stringify(item), (err) => {
     res.status(200).json({
-      status: 200,
-
       message: "Tour updated successfully",
     });
   });
@@ -78,13 +70,12 @@ app.delete("/tours/:id", (req, res) => {
   //Write a code here for deleting a tour from data/tours.json
   const filteredItem = tourDetails.filter((user) => user.id != tourId);
   if (filteredItem.length == tourDetails.length)
-    return res.status(404).json({ status: 404, message: "Not Found" });
+    return res.status(404).json({ message: "Tour not found" });
   fs.writeFile(
     `${__dirname}/data/tours.json`,
     JSON.stringify(filteredItem),
     (err) => {
       res.json({
-        status: 200,
         message: "Tour deleted successfully",
       });
     }
